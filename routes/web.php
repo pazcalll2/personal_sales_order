@@ -25,7 +25,7 @@ Route::get('/page/{blade}', function ($blade) {
 
 Route::get('/', [CatalogueController::class, 'index']);
 Route::post('/search', [CatalogueController::class, 'search']);
-Route::post('/filter', [CatalogueController::class, 'filter']);
+Route::get('/filter', [CatalogueController::class, 'filter']);
 
 
 Route::get('/index-tabel', [CatalogueController::class, 'tabel']);
@@ -96,12 +96,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
 
     // return
     Route::get('/return/pesanan', 'ReturnOrderController@index');
-    Route::get('/return/approval', 'ReturnOrderController@show');
+    Route::get('/return/approval', 'ReturnOrderController@data');
 
     // tagihan
     Route::get('/tagihan/kirim', 'TagihanController@index');
     Route::get('/tagihan/lihat', 'TagihanController@show');
-    Route::get('/tagihan/bayar', 'TagihanController@bayar');
+    Route::get('/tagihan/bayar', 'TagihanController@bayar')->name('pembayaran');
     Route::get('/tagihan/cetak', 'TagihanController@cetak_tagihan')->name('cetak_tagihan');
     Route::get('/surat_jalan/cetak', 'TagihanController@cetak_surat_jalan')->name('cetak_surat_jalan');
     Route::post('/tagihan/add', 'TagihanController@store')->name('addTagihan');
@@ -119,8 +119,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile_return', 'ProfilController@return');
 
     // purchase-order
-    Route::get('/order', [OrderController::class, 'index']);
+    Route::get('/order', 'OrderController@index');
     Route::post('/order/purchase-order', 'PurchaseOrderController@store');
+    Route::post('/order/upload', 'TagihanController@upload');
+    Route::get('/order/payment', 'PaymentController@index');
+    Route::get('/order/getPayment', 'PaymentController@getPayment');
 
     Route::get('/session/{key}', 'SessionController@retrieve');
     Route::post('/session/save', 'SessionController@store');
