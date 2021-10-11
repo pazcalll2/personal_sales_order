@@ -89,7 +89,6 @@ class TagihanController extends Controller
     {
         // $order = Order::wherein('status', ['DISETUJUI SEBAGIAN', 'DISETUJUI SEMUA'])->where('po_id', $request->po_id);
         $order = Order::wherein('status', ['BELUM DISETUJUI'])->where('po_id', $request->po_id);
-        // $tagihan = Order::wherein('')
         $totalOrderApprove = $order->leftjoin('products as pr', 'pr.id', '=', 'orders.product_id')
             ->selectRaw('sum( pr.harga * qty) as total')
             ->first()->total;
