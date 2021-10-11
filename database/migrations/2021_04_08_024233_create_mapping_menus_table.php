@@ -13,6 +13,7 @@ class CreateMappingMenusTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('mapping_menus', function (Blueprint $table) {
             $table->id();
             $table->enum('group', ['ALL', 'ADMINISTRATOR', 'AGENT', 'CUSTOMER']);

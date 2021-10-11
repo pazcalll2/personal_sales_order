@@ -13,6 +13,7 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('nama');

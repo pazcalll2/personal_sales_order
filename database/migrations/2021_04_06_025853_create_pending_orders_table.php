@@ -13,6 +13,7 @@ class CreatePendingOrdersTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('pending_orders', function (Blueprint $table) {
             $table->id();
             $table->timestamps();

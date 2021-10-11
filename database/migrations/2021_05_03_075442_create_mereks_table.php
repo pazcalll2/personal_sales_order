@@ -13,6 +13,7 @@ class CreateMereksTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('mereks', function (Blueprint $table) {
             $table->id();
             $table->string('nama_merek');

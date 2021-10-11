@@ -142,7 +142,7 @@ class MenuSeeder extends Seeder
             [
                 'id' => 18,
                 'nama' => 'Lihat Tagihan',
-                'link' => '/dashboard/return/approval',
+                'link' => '/dashboard/tagihan/approval',
                 'urutan' => 142,
                 'parent' => 16,
                 'icon' => 'a'

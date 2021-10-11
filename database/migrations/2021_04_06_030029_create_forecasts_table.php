@@ -13,6 +13,7 @@ class CreateForecastsTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('forecasts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_product');

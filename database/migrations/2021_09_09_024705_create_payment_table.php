@@ -13,17 +13,16 @@ class CreatePaymentTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('po_id');
-            $table->string('nominal_total');
+            $table->foreign('po_id')->references('id')->on('purchase_orders')->onDelete('cascade');
             $table->string('nominal_bayar');
             $table->boolean('valid');
-            $table->enum('status', ['LUNAS', 'DIBAYAR SEBAGIAN','BELUM DIBAYAR']);
             $table->string('bukti_tf');
             $table->timestamps();
 
-            $table->foreign('po_id')->references('id')->on('purchase_orders')->onDelete('cascade');
         });
     }
 

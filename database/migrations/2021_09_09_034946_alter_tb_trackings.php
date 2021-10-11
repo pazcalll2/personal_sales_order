@@ -13,11 +13,12 @@ class AlterTbTrackings extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('trackings', function($table) {
-            $table->dropColumn('order_id');            
             $table->unsignedBigInteger('tagihan_id')->nullable();
             
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            // $table->dropColumn('order_id');            
 
             $table->foreign('tagihan_id')->references('id')->on('tagihans')->onDelete('cascade');        
         });
@@ -28,12 +29,13 @@ class AlterTbTrackings extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::table('trackings', function($table) {
-            $table->dropColumn('tagihan_id');            
-            $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-        });        
-    }
+    // public function down()
+    // {
+    //     Schema::disableForeignKeyConstraints();
+    //     Schema::table('trackings', function($table) {
+    //         $table->dropColumn('tagihan_id');            
+    //         $table->unsignedBigInteger('order_id');
+    //         $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+    //     });        
+    // }
 }
