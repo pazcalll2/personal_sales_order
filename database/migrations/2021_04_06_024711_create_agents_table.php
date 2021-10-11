@@ -13,6 +13,7 @@ class CreateAgentsTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('agents', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->bigInteger('limit')->default();

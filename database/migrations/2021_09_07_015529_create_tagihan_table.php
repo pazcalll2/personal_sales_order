@@ -13,13 +13,17 @@ class CreateTagihanTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('tagihans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('po_id');
-            $table->enum('status', ['LUNAS', 'BELUM DIBAYAR', 'DIBAYAR SEBAGIAN']);
+            $table->unsignedBigInteger('driver_id');
+            $table->string('nominal_total');
+            $table->enum('status', ['BELUM DIBAYAR', 'DIBAYAR SEBAGIAN', 'LUNAS']);
             $table->timestamps();
 
             $table->foreign('po_id')->references('id')->on('purchase_orders')->onDelete('cascade');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
         });
     }
 
@@ -30,6 +34,7 @@ class CreateTagihanTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('tagihans');
     }
 }

@@ -13,6 +13,7 @@ class AlterTbOrders extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('orders', function($table) {
             $table->unsignedBigInteger('tagihan_id')->nullable();
 
@@ -25,11 +26,12 @@ class AlterTbOrders extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::table('orders', function($table) {
-            $table->dropColumn('tagihan_id');
-            $table->foreign('tagihan_id')->references('id')->on('tagihans')->onDelete('cascade');                    
-        });
-    }
+    // public function down()
+    // {
+    //     Schema::disableForeignKeyConstraints();
+    //     Schema::table('orders', function($table) {
+    //         $table->dropColumn('tagihan_id');
+    //         $table->foreign('tagihan_id')->references('id')->on('tagihans')->onDelete('cascade');                    
+    //     });
+    // }
 }

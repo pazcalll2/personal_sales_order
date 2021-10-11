@@ -13,6 +13,7 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('customers', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->timestamps();

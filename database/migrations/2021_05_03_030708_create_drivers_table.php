@@ -13,6 +13,7 @@ class CreateDriversTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('drivers', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->enum('status', ['ACTIVE', 'NON-ACTIVE']);

@@ -13,6 +13,7 @@ class AlterTbPayment extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('payments', function($table) {    
             $table->unsignedBigInteger('tagihan_id')->nullable();
     
@@ -25,10 +26,11 @@ class AlterTbPayment extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::table('payments', function($table) {
-            $table->dropColumn('tagihan_id');            
-        });    
-    }
+    // public function down()
+    // {
+    //     Schema::disableForeignKeyConstraints();
+    //     Schema::table('payments', function($table) {
+    //         $table->dropColumn('tagihan_id');            
+    //     });    
+    // }
 }

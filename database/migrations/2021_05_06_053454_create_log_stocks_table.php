@@ -13,6 +13,7 @@ class CreateLogStocksTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('log_stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('stock_id')->nullable();

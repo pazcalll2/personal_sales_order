@@ -13,6 +13,7 @@ class CreatePurchaseOrdersTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
             $table->string('no_nota');
