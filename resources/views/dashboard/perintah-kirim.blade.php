@@ -67,8 +67,9 @@
 @section('script')
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
     <script>
-        $(document).ready(function() {
-
+        let dataChecked = []
+        function loadPage() {
+            
             var formatter = new Intl.NumberFormat('en-ID', {
                 style: 'currency',
                 currency: 'IDR',
@@ -210,7 +211,6 @@
                 }
             })
 
-            var dataChecked = []
             $(document).on('change', '.check', function() {
                 if ($(this).is(':checked')) {
                     var data = array_tagihans[$(this).val()];
@@ -240,50 +240,71 @@
                 console.log(dataChecked);
             });
 
-            $('.btn_simpan').on('click', function() {
-                var id_driver = $("#list-driver").val();
-                var data = dataChecked;
-                var jatuh_tempo = $("#jatuh_tempo").val();
+        }
 
-                $.ajax({
-                    url: "{{ url('data/purchase-order/kirim') }}",
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        id_driver: id_driver,
-                        data: data,
-                        jatuh_tempo : jatuh_tempo
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: (response) => swal({
-                        title: 'Yeaaay!',
-                        text: response.message,
-                        type: "success"
-                    }, function() {
-                        window.location.href = "{{url('dashboard/order/tagihan')}}"
-                    }),
-                    error: (response) => swal({
-                        title: 'Hufffttt!',
-                        text: 'Please try again later',
-                        type: "error"
-                    })
-                });
-            });
+        // page preparations
+        $(document).ready(function() {
+            loadPage()
         })
 
-        $(".btn-kirim").click(function() {
-            $("#modal-select-driver").modal("show");
-            $('#modal-select-driver').on('shown.bs.modal', function(e) {
-            $('.datepicker').datepicker({
-                format: "yyyy-mm-dd",
-                todayBtn: "linked",
-                autoclose: true,
-                todayHighlight: true
+        $(document).on('click', '.btn_simpan', function() {
+            var id_driver = $("#list-driver").val();
+            var data = dataChecked;
+            var jatuh_tempo = $("#jatuh_tempo").val();
+            $(".btn_simpan").attr('disabled', true);
+            $.ajax({
+                url: "{{ url('data/purchase-order/kirim') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id_driver: id_driver,
+                    data: data,
+                    jatuh_tempo : jatuh_tempo
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: (response) => swal({
+                    title: 'Yeaaay!',
+                    text: response.message,
+                    type: "success"
+                }, function() {
+                    // window.location.href = "{{url('dashboard/order/tagihan')}}"
+                    $(".btn_simpan").attr('disabled', true);
+                    $('.close').click()
+                    loadPage()                        
+                    $(".btn_simpan").attr('disabled', false);
+                }),
+                error: (response) => swal({
+                    title: 'Hufffttt!',
+                    text: 'Please try again later',
+                    type: "error"
+                })
+            }).done(function() {
+                dataChecked = [];
+                $(".modal-dialog").modal("hide");
             });
         });
-    });
+
+        $(".btn-kirim").click(function() {
+            if(dataChecked.length > 0){
+                $("#modal-select-driver").modal("show");
+                $('#modal-select-driver').on('shown.bs.modal', function(e) {
+                    $('.datepicker').datepicker({
+                        format: "yyyy-mm-dd",
+                        todayBtn: "linked",
+                        autoclose: true,
+                        todayHighlight: true
+                    });
+                });
+            } else {
+                swal({
+                    title: 'Tidak ada tagihan yang dipilih!',
+                    text: 'Mohon memilih tagihan setidaknya 1 tagihan',
+                    type: "error"
+                })
+            }
+        });
 
     </script>
 @endsection

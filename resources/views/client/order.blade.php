@@ -41,15 +41,15 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                     <div class="tab-pane active animation-slide-left" id="proses" role="tabpanel">
                         <div class="example-wrap">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-striped" id="table-prosses">
+                                <table class="table w-full responsive display nowrap" id="table-prosses">
                                     <thead>
                                         <tr style="text-align: center">
-                                            <th></th>
-                                            <th>No.</th>
-                                            <th>No. Nota</th>
-                                            <th>Tanggal Pesan</th>
-                                            <th>Total Pesanan</th>
-                                            <th class="text-center">Aksi</th>
+                                            <th width="2%"></th>
+                                            <th width="4%">No.</th>
+                                            <th width="20%">No. Nota</th>
+                                            <th width="15%">Tanggal Pesan</th>
+                                            <th width="15%">Total Pesanan</th>
+                                            <th width="1%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -170,51 +170,6 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
 @endsection
 
 @section('modal')
-<div class="modal fade example-modal-lg modal-3d-sign" id="modalReturn" aria-hidden="true" aria-labelledby="modalReturn" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-simple modal-center modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title">Return Pesanan</h4>
-            </div>
-            <div class="modal-body">
-                <div class="example-wrap">
-                    <br>
-                    <h4 class="example-title text-center">Daftar produk yang akan di return</h4>
-                    <div class="example">
-                        <div class="table-responsive">
-                            <form id="form-list-return">
-                                @csrf
-                                <input type="hidden" name="id">
-
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Nama Produk</th>
-                                            <th>Qty</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody-return">
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group form-material col-xl-12">
-                <button type="button" class="btn btn-default" id="resetBtn">Reset
-                </button>
-                <button type="submit" class="btn btn-primary btn-return" id="validateButton1">Return
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade example-modal-lg modal-3d-sign" id="modalPickup" aria-hidden="true" aria-labelledby="modalPickup" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-simple modal-center modal-lg">
         <div class="modal-content">
@@ -385,7 +340,7 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
         </div>
     </div>
 </div>
-
+<!--Modal Tagihan -->
 <div class="modal fade example-modal-lg modal-3d-sign" id="modalTagihan" aria-hidden="true" aria-labelledby="modalTagihan" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-simple modal-center modal-lg">
         <div class="modal-content">
@@ -403,7 +358,7 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                         <div class="table-responsive">
                             <form id="form-list-pickup">
                                 @csrf
-                                <input type="hidden" name="id">
+                                <input type="hidden" name="tagihan">
 
                                 <table class="table table-bordered table-hover table-striped" id="tb_tagihan">
                                     <thead id="thead">
@@ -411,12 +366,12 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                                             <th></th>
                                             <th>No.</th>
                                             <th width="10%">Tagihan</th>
-                                            <th>Tanggal</th>
+                                            <th width="15%">Tanggal</th>
                                             <th>Driver</th>
                                             <th width="12%">Total</th>
                                             <th>Status Bayar</th>
                                             <th>Status Pengiriman</th>
-                                            <th width="20%">Aksi</th>
+                                            <th width="35%">Aksi</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -431,14 +386,19 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
         </div>
     </div>
 </div>
-<div class="modal fade example-modal-lg modal-3d-sign" id="modalPembayaran" aria-hidden="true" aria-labelledby="modalPembayaran" role="dialog" tabindex="-1">
+<!-- Modal Pembayaran -->
+<div class="modal fade example-modal-lg modal-3d-sign"  data-toggle="modal" id="modalPembayaran" aria-hidden="true" aria-labelledby="modalPembayaran" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-simple modal-center modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="titleMPembayaran">Pembayaran</h4>
+                <h4 class="modal-title" id="titleMPembayaran" style="color: blue;">
+                    Pembayaran
+                    <br>
+                    <span style="color: orange;">Belum Dibayar (Rp/IDR): <span id="accumulation">0</span></span>
+                </h4>
             </div>
             <div class="modal-body">
                 <div class="example-wrap">
@@ -446,18 +406,18 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                     <h4 class="example-title text-center">Daftar Pembayaran</h4>
                     <div class="example">
                         <div class="table-responsive">
-                            <form id="form-list-pickup">
+                            <form id="form-list-pickup" method="post">
                                 @csrf
-                                <input type="hidden" name="id">
+                                <input type="hidden" name="pembayaran">
 
                                 <table class="table table-bordered table-hover table-striped" id="tb_pembayaran">
                                     <thead id="thead">
-                                        <tr>
-                                            <th></th>
+                                        <tr style="text-align: center;">
                                             <th>No.</th>
-                                            <th>Nama</th>
-                                            <th>Tanggal</th>
-                                            <th>Bukti Transfer</th>
+                                            <th>Tagihan</th>
+                                            <th width="20%">Jumlah Bayar</th>
+                                            <th>Metode Pembayaran</th>
+                                            <th>Upload Bukti Pembayaran</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -467,7 +427,82 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                {{-- <button type="submit" class="btn btn-warning">Bayar</button> --}}
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalTagihan" id="back2">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Upload Transfer -->
+<div class="modal fade example-modal-md modal-3d-sign" id="uploadBukti" aria-hidden="true" aria-labelledby="uploadBukti" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-simple modal-center modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" style="color: blue">Upload Bukti Bayar</h4>
+            </div>
+            <form action="#" method="post" enctype="multipart/form-data" id="formImg">
+                @csrf
+                <div class="modal-body">
+                    <div class="example-wrap">
+                        <div id="wrapper-hidden"></div>
+                        <br>
+                        <h4 class="example-title text-center">Upload File</h4>
+                        <div class="example">
+                            <input type="file" name="inputBukti" id="inputBukti" data-plugin="dropify" data-default-file="" />
+                            {{-- <input type="file" name="inputBukti"> --}}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><a href="#">Batal</a></button>
+                    <button type="submit" form="formImg" class="btn btn-primary uploadInputBukti"><span style="color: beige;">Upload</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal Return -->
+<div class="modal fade example-modal-lg modal-3d-sign"  data-toggle="modal" id="modalReturn" aria-hidden="true" aria-labelledby="modalReturn" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-simple modal-center modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="titleMPembayaran" style="color: blue;">Return</h4>
+            </div>
+            <div class="modal-body">
+                <div class="example-wrap">
+                    <br>
+                    <h4 class="example-title text-center">Return Produk</h4>
+                    <div class="example">
+                        <div class="table-responsive">
+                            <form id="rereturn" method="post" action="">
+                                @csrf
+                                <input type="hidden" name="return">
+
+                                <table class="table table-bordered table-hover table-striped" id="tb_return">
+                                    <thead id="thead">
+                                        <tr style="text-align: center;">
+                                            <th>No.</th>
+                                            <th>Tagihan Ke-</th>
+                                            <th>Tanggal Return</th>
+                                            <th>Qty Diterima</th>
+                                            <th>Alasan</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning" id="returns">Submit</button>
+                <button type="button" from="rereturn" class="btn btn-secondary" data-toggle="modal" id="back1">Back</button>
             </div>
         </div>
     </div>
@@ -479,10 +514,19 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
     var table2;
     var user = `{{Auth::user()->group_id}}`;
     var table;
-
+    let tagihanCollections = [];
+    let toPayment = [];
+    let reasons = [];
+    let obtainedIndex = 0
+    let newImg = null
+    var form_data = new FormData();
     $(document).ready(function() {
         // console.log(user);
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         table = $('#table-prosses').DataTable({
             processing: true,
             serverSide: true,
@@ -536,6 +580,7 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
         });
 
         function format(d) {
+            console.log(d)
             var template = ''
 
             template += `
@@ -569,7 +614,6 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
 
             return template
         }
-
         // Array to track the ids of the details displayed rows
         var detailRows = [];
 
@@ -597,8 +641,7 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                 }
             }
         });
-
-        // On each draw, loop over the `detailRows` array and show any child rows
+        // Modal Tagihan
         table.on('draw', function() {
             $.each(detailRows, function(i, id) {
                 $('#' + id + ' td.details-control').trigger('click');
@@ -616,18 +659,24 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
             const id = $(this).data('id')
             const no_nota = $(this).data('no_nota')
             const data = table.rows().data()[id]
-            // console.log(id);
-            // console.log(data);
+            console.log(data)
 
             $('input[name=id]').val(data.id)
             var templateTghn = '';
 
+            // let tagihanPerNota = null
+            // $.ajax({
+            //     url: '{{ url("order/payment") }}',
+            //     type: 'GET',
+            //     success: (res) => {
+            //         console.log('payment Data', res)
+            //         tagihanPerNota = res
+            //     }
+            // })
+
             data.tagihans.forEach((tagihan, _index) => {
-                //    <div class="checkbox-custom checkbox-warning">
-                //         <input type="checkbox" id="inputUnchecked" name="id_order[]" value="${ element.id }">
-                //         <label for="inputChecked"></label>
-                //     </div>
-                var total = tagihan.nominal_total != null ? 'Rp. ' + tagihan.nominal_total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") : '-'
+
+                var total = tagihan.nominal_total != null ? 'Rp ' + tagihan.nominal_total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") : '-'
                 var status = driver = '';
 
                 if (tagihan.driver != null) {
@@ -673,26 +722,24 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                                     ${ status_delivery }
                                 </td>
                                 <td class="font-weight-medium text-primary">`
-                templateTghn += `<a href="{{route('cetak_tagihan')}}?no_nota=${ no_nota }&id_tagihan=${ tagihan.id }" target="_blank" type="button" name="" id="" class="btn btn-xs btn-primary"><i class="icon md-money-box" aria-hidden="true"></i> Tagihan</a>`
+                
+                templateTghn += `<a href="{{route('cetak_tagihan')}}?no_nota=${ no_nota }&id_tagihan=${ tagihan.id }" target="_blank" type="button" name="" id="" class="btn btn-xs btn-primary"><i class="icon md-money-box" aria-hidden="true"></i>Tagihan</a>`
                 templateTghn += `
                 `
-                templateTghn += `<a href="{{route('cetak_tagihan')}}?id_pembayaran=${ tagihan.id }" target="_blank" type="button" name="" id="" class="btn btn-xs btn-danger" style="ml-2"><i class="icon md-money" aria-hidden="true"></i> Bayar</a>`
+                templateTghn += `<a id="btn-pay${tagihan.id}" name="pembayaran" data-toggle="modal" href="no_nota=${ no_nota }&id_tagihan=${ tagihan.id }" type="button" class="btn btn-xs btn-warning pembayaran" style="ml-2"><i class="icon md-money" aria-hidden="true"></i>Bayar</a>`
                 templateTghn += `
-                </td>
-                            </tr>
-                        </tbody>
-                        <tbody>`
-
-                // array_tagihans.push({
-                //         "Id": tagihan.id,
-                //         "target": po.user,
-                //         "po_id": po.id,
-                //         "tagihan_id": tagihan.id,
-                //         "orders": tagihan.orders,
-                //     })
-                // idx_array_tagihans++
-
-                templateTghn += `<tr text>
+                `
+                if (tagihan.tracking_newest.length>0) {
+                    if(tagihan.tracking_newest[0].status == 'ARRIVED WITH RETURN') {
+                        templateTghn +=`<a id="btn-return" name="return" data-toggle="modal" href="no_nota=${ no_nota }&id_tagihan=${ tagihan.id }" type="button" class="btn btn-xs btn-danger"><i class="icon md-assignment-return" aria-hidden="true"></i>Return</a>`
+                    }
+                }
+                templateTghn +=`
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>`
+                templateTghn += `<tr style="text-align: center">
                                     <td></td>
                                     <td class="font-weight-bold" colspan="5">NAMA PRODUK</td>
                                     <td class="font-weight-bold">QTY</td>
@@ -703,20 +750,200 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                     templateTghn += `
                             <tr>
                                 <td></td>
-                                <td class="font-weight-medium text-success" colspan="5">
+                                <td class="font-weight-medium text-primary" colspan="5">
                                     ${ order.product.nama }
                                 </td>
                                 <td>${ order.qty }</td>
                                 <td colspan="2">${  'Rp '+(order.qty * order.product.harga).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")  }</td>
                             </tr>`
-                }) // foreach
-
+                }) 
+            // foreach
                 templateTghn += `</tbody>`
 
-
+                
                 $table.append(templateTghn)
-                console.log(templateTghn);
-            }) // foreach       
+                templateTghn = ''
+                // console.log(_index);
+            }) // foreach
+            //pembayaran
+            // table.on('draw', function() {
+            //     $.each(detailRows, function(i, id) {
+            //         $('#' + id + ' td.details-control').trigger('click');
+            //     });
+            // });
+
+            data.tagihans.forEach((tagihan, _index) => {
+                $(`#btn-pay${tagihan.id}`).click(function() {
+                    tagihanCollections=[]
+                    $('#modalPembayaran').modal('show')
+                    $('#modalTagihan').modal('hide')
+                    $headTable = $('#thead')
+                    $table = $('#tb_pembayaran')
+                    $table.empty();
+                    let tagihan_id = []
+                    let po_id = []
+                    // const id = $(this).data('id')
+                    // const no_nota = $(this).data('no_nota')
+                    // const data = table.row().data()[id]
+
+                    // $('input[name=id]').val(data.id)
+                    console.log(data)
+                    var templatePbyn = `
+                        <thead id="thead">
+                            <tr style="text-align: center;">
+                                <th>No.</th>
+                                <th>Tagihan</th>
+                                <th width=20%>Jumlah Bayar</th>
+                                <th>Metode Pembayaran</th>
+                                <th>Upload Bukti Pembayaran</th>
+                            </tr>
+                        </thead>
+                    `;
+                    let accumulationAmount = 0
+                    // data.tagihans.forEach((tagihan, _index) => {
+                    var total= tagihan.nominal_total != null ? 'Rp ' + tagihan.nominal_total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") : '-';
+                    tagihan_id.push(tagihan.id)
+                    po_id.push(tagihan.po_id)
+                    tagihanCollections.push(tagihan)
+                    
+                    templatePbyn += `
+                        <tbody class="table-section" data-plugin="tableSection">
+                            <tr style="cursor: pointer; text-align: center;">
+                                <!-- <td class="text-center"></i></td> -->
+                                <td> ${ _index+1 } </td>
+                                <td> Tagihan ${ _index+1 }
+                                <input type="hidden" id="id_tagihan" name="id_tagihan" value="${tagihan.id}"></td>
+                                <!-- <td class="font-weight-medium text-danger">${ total }</td> -->
+                                <td class="font-weight-medium text-danger"><p style="display:flex" id="paid${tagihan.id}">Rp <input type="number" id="uangTerkirim${tagihan.id}" name="uangTerkirim" value="${parseInt(tagihan.nominal_total)}" max="${parseInt(tagihan.nominal_total)}" class="form-control" style="max-width:100%; margin-left:10px; margin-right: 0; padding-right:0;"></p></td>
+                                <td class="font-weight-medium text-danger">
+                                <select class="form-control option-bayar" id="metode" required="">
+                                    <option value="Alfamart/Indomaret">Alfamart/Indomaret</option>
+                                    <option value="Dana">Dana</option>
+                                    <option value="Go-Pay">GO-Pay</option>
+                                    <option value="Link Aja">Link Aja</option>
+                                    <option value="OVO">OVO</option>
+                                    <option vlaue="Transfer Bank">Transfer Bank</option>   
+                                </select>
+                                </td>
+                                <td class="text-center">`
+                    
+                            templatePbyn += `
+                                <span id="uploadStatus${tagihan_id}"></span>
+                                `
+                                
+                    templatePbyn += `
+                                <button class="btn btn-sm btn-icon btn-pure btn-default on-default hide${tagihan.id}" onclick="collectTagihan(${_index+1})" data-target="#uploadBukti" data-toggle="modal" type="button" data-original-title="Bayar">
+                                    <a href="#modalPembayaran" data-toggle="tooltip" data-original-title="UploadBukti"><i class="icon md-upload" aria-hidden="true"></i></a>
+                                </button>
+                                </td>
+                            </tr>
+                        </tbody>`
+                    $table.append(templatePbyn)
+                    accumulationAmount += parseInt(tagihan.nominal_total)
+                    let amountStr = accumulationAmount.toString()
+                    // });
+                    console.log(tagihanCollections)
+                    let paymentForeigns = [tagihan_id, po_id]
+                    $('#accumulation').html(amountStr.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."))
+                    paymentAjax(paymentForeigns, tagihanCollections, accumulationAmount, tagihan.id)
+                    $('input').keydown(function (e) {
+                        if (e.keyCode == 13) {
+                            e.preventDefault();
+                            return false;
+                        }
+                    });
+                });
+            })
+
+            function paymentAjax(paymentForeigns, tagihanCollections, accumulationAmount, tagihan_id){
+                $.ajax({
+                    url: '{{ url("/order/getPayment") }}',
+                    type: 'GET',
+                    async: false,
+                    data: {data: paymentForeigns},
+                    success: (response) => {
+                        console.log(response)
+                        if (response.length > 0) {
+                            response.forEach((tagihan, _index) => {
+                                console.log(tagihan)
+                                if (tagihan_id == tagihan.tagihan_id) {
+                                    if (tagihan.valid == 0) $(`#uploadStatus${tagihan.tagihan_id}`).html('<span style="color:red">Bukti tagihan ditolak</span>');
+                                    else if (tagihan.valid == 9) $(`#uploadStatus${tagihan.tagihan_id}`).html('<span style="color:orange">Menunggu konfirmasi admin</span>');
+                                    else if (tagihan.valid == 1) $(`#uploadStatus${tagihan.tagihan_id}`).html('<span>Pembayaran diterima sebagian</span>');
+                                    else if (tagihan.valid == 2) $(`#uploadStatus${tagihan.tagihan_id}`).html('<span style="color: green">Pembayaran diterima semua</span>');
+
+                                    if(tagihan.valid == 2 || tagihan.valid == 1){    
+                                        $accumulationAmount = accumulationAmount - tagihan.nominal_bayar;
+                                        $('#accumulation').html($accumulationAmount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."))
+                                    }
+                                }
+                                
+                                $(`#uangTerkirim${tagihan.tagihan_id}`).remove();
+                                $(`#paid${tagihan.tagihan_id}`).css("display", "block");
+                                $(`#paid${tagihan.tagihan_id}`).html("Rp "+tagihan.nominal_bayar.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
+                                $(`.hide${tagihan.tagihan_id}`).remove();
+                            })
+                        }
+                    }
+                })
+            }
+            // //return
+            // table.on('draw', function() {
+            //     $.each(detailRows, function(i, id) {
+            //         $('#' + id + ' td.details-control').trigger('click');
+            //     });
+            // });
+            $('#btn-return').click(function() {
+                $('#modalReturn').modal('show')
+                $('#modalTagihan').modal('hide')
+                $headTable = $('#thead')
+                $table = $('#tb_return')
+                // $table.empty();
+                // console.log(data);
+                let tagihan_id = []
+                let po_id = []
+                var templateRtn = '';
+                // console.log(data)
+                let return_tagihan_id = []
+                data.tagihans.forEach((tagihan, _index) => {
+                    return_tagihan_id.push(tagihan.id)
+                });
+                // console.log(return_tagihan_id[0])
+                $.ajax({
+                    url: `{{ route("return_barang") }}`,
+                    type: 'GET',
+                    data: {data: return_tagihan_id},
+                    success: (response) => {
+                    //     console.log(response);
+                        response.forEach((order, _index) => {
+                            templateRtn += `
+                            <tbody class="table-section" data-plugin="tableSection">
+                                <tr style="cursor: pointer; text-align: center;">
+                                    <td> ${ _index+1 } </td>
+                                    <td> Tagihan - ${ _index+1 } </td>
+                                    <td class="font-weight-medium">${moment(order.created_at).format('dddd, DD MMMM YYYY')}</td>
+                                    <td class="font-weight-medium">${ order.qty } </td>
+                                    <td class="font-weight-medium">
+                                        <input id="alasan${ _index+1 }" name="alasan" type="text" value="" placeholder="Alasan Return">
+                                    </td>
+                                </tr>
+                            </tbody>`
+                            $table.append(templateRtn)
+                        })
+                        // toastr.options.onShown = () => window.location.reload(true)
+                        // toastr["success"]("Alasan Return Success")
+                    }
+                })
+            });
+            $('#back1').click(function() {
+                $('#modalReturn').modal('hide')
+                window.location.reload(true);
+                $('#modalTagihan').modal('show');
+            });
+
+            $('#back2').click(function() {
+                $('#modalPembayaran').modal('hide');
+            })
 
             $('#modalTagihan').modal({
                 backdrop: 'static',
@@ -724,71 +951,17 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                 show: true
             })
         })
-        //modal pembayaran
-        $('#table-prosses').on('click', 'td .go_pembayaran', function() {
-
-            $headTable = $('#thead')
-            $table = $('#tb_pembayaran')
-
-            $table.empty();
-            $table.append($headTable);
-
-            const id = $(this).data('id')
-            const no_nota = $(this).data('no_nota')
-            const data = table.rows().data()[id]
-
-            $('input[name=id]').val(data.id)
-            var templatePby = '';
-            templatePby += `
-                        <tbody class="table-section" data-plugin="tableSection">
-                            <tr style="cursor: pointer; text-align: center;">
-                                <td class="text-center"><i class="table-section-arrow"></i></td>                                            
-                                <td>
-                                    ${ _index+1 }
-                                </td>
-                                <td>
-                                    ${ product.nama }
-                                </td>
-                                <td class="font-weight-medium" >
-                                    ${moment(tagihan.created_at).format('dddd, DD MMMM YYYY')}
-                                </td>
-                                <td class="font-weight-medium text-secondary">
-                                    ${ driver } <i class="icon md-truck" aria-hidden="true"></i> ${status} 
-                                </td>
-                                <td class="font-weight-medium text-danger">
-                                    ${ total }
-                                </td>
-                                <td class="font-weight-medium text-danger">
-                                    ${ tagihan.status }
-                                </td>
-                                <td class="font-weight-medium text-danger">
-                                    <input class="buktiTransfer" type="image">
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody>`
-
-            $('#modalPembayaran').modal({
-                backdrop: 'static',
-                keyboard: false,
-                show: true
-            })
-        })
-        //end modal pembayaran
-
-        $('.btn-return').click(function() {
+        //button submit return
+        $('#returns').click(function () {
             toastr.options = {
                 positionClass: 'toast-bottom-right',
             }
-
-            const data = $('#form-list-return').serialize()
             $.ajax({
-                url: `{{ url("data/order/return") }}`,
+                url: `{{ route("reasons") }}`,
                 type: 'POST',
                 data: data,
                 success: (res) => {
-                    toastr.options.onShown = () => window.location.reload(true)
-                    toastr["success"]("Berhasil mengubah data")
+                    toastr["success"]("Berhasil Memberikan Alasan Return")
                 }
             })
         })
@@ -848,7 +1021,6 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
             })
         })
 
-
         var pending_column = ["id", "nama_produk", "no_nota", "tgl_pesan", "total_pesanan", "qty"];
         var return_column = ["id", "tgl_return", "nama_produk", "no_nota", "qty", "alasan", "status"];
         dataTable("#tabel_pending", pending_column, 'pending');
@@ -856,6 +1028,70 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
         $("#tabel_riwayat").DataTable({
             dom: ''
         });
+    })
+
+    $('#formImg').on('submit',function(e) {
+        e.preventDefault();
+        $('#uploadBukti').modal('hide');
+        toPayment = []
+        toPayment.push(tagihanCollections[0])
+        console.log(toPayment)
+        let id = toPayment[0]['id']
+        let po_id = toPayment[0]['po_id']
+        let nominal_total = toPayment[0]['nominal_total']
+        let nominal_terkirim = $(`input[type=number]#uangTerkirim${toPayment[0]['id']}`).val()
+        // console.log("nominal terkirim  ", $(`input[type=number]#uangTerkirim${toPayment[0]['id']}`).val())
+        $("#wrapper-hidden").empty()
+        $("#wrapper-hidden").append(`
+            <input type='hidden' name='id' value='${id}'>
+            <input type='hidden' name='po_id' value='${po_id}'>
+            <input type='hidden' name='nominal_total' value='${nominal_total}'>
+            <input type='hidden' name='nominal_terkirim' value='${nominal_terkirim}'>
+        `)
+        let form_data2 = new FormData(this);
+        // form_data.append('data', toPayment)
+        if(nominal_terkirim > nominal_total || nominal_terkirim < 100) toastr["error"]("Pembayaran melebihi limit / nilai field dibawah Rp 100")
+        else
+        $.ajax({
+            url: `{{ url('/order/upload') }}`,
+            // encType: 'multipart/form-data',
+            type: 'POST',
+            contentType: false,
+            // cache: false,
+            // dataType: 'JSON',
+            processData: false,
+            data: form_data2,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: (res) => {
+                console.log(res);
+                // $accumulation = parseInt(res.tagihan_awal[0].nominal_total)-parseInt(res.data.nominal_bayar)
+                // $('#accumulation').html($accumulation.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."))
+                $(`#uploadStatus${res.data.tagihan_id}`).html('Telah di upload');
+                console.log('obtained index ',obtainedIndex)
+                $('.dropify-clear').click();
+                // toPayment = []
+                $('.md-upload').hide();
+                $('.on-default').hide();
+                toastr["success"]("Berhasil Upload Bukti Transfer")
+            },
+            error: (res) => {
+                console.log(res.responseJSON);
+                toastr["error"](res.responseJSON.message.inputBukti[0])
+            }
+        })
+        console.log(toPayment[0]['id']);
+    })
+    
+    $(document).on('change', '#inputBukti', function(e) {
+        e.preventDefault();
+        var name = document.getElementById("inputBukti").files[0].name;
+        var ext = name.split('.').pop().toLowerCase();
+
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("inputBukti").files[0]);
+        var f = document.getElementById("inputBukti").files[0];
+        newImg = f
+        // console.log(form_data)
     })
 
     function dataTable(table, column, url) {
@@ -894,5 +1130,11 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
             columns: $column
         });
     }
+
+    
+    function collectTagihan(number){
+        obtainedIndex = number
+    }
+
 </script>
 @endsection

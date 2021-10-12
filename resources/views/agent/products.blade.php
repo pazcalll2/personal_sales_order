@@ -241,13 +241,14 @@ $bodyType = 'site-menubar-unfold site-menubar-show site-navbar-collapse-show';
                                 </tbody>
                             </table>
                             <div class="form-group form-material col-3" data-plugin="formMaterial">
-                                <label class="form-control-label" for="select">Metode Bayar <span class="required">*</span></label>
+                                <label class="form-control-label" for="select">Metode Pembayaran <span class="required">*</span></label>
                                 <select class="form-control" id="select" required="">
-                                    <option>Tunai</option>
-                                    <option>Transfer</option>
+                                    <option>Tunai/Cash</option>
+                                    <option>Transfer Bank</option>
+                                    <option>Indomaret/Alfamart</option>
                                     <option>Link Aja</option>
                                     <option>Dana</option>
-                                    <option>Ovo</option>
+                                    <option>OVO</option>
                                 </select>
                             </div>
                         </div>

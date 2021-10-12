@@ -44,13 +44,13 @@
                 data.forEach((po, index) => {
                     template = `
                         <tbody class="table-section" data-plugin="tableSection">
-                            <tr style="cursor: pointer">
+                            <tr style="cursor: pointer; text-align: center;">
                                 <td class="text-center"><i class="table-section-arrow"></i></td>
                                 <td class="font-weight-medium">
                                     ${ po.no_nota }
                                 </td>
                                 <td>
-                                    <span class="font-weight-medium">${ po.user.name }</span>
+                                    <span class="font-weight-medium" style="color: blue">${ po.user.name }</span>
                                 </td>
                                 <td>
                                     <span class="text-muted">${ moment(po.created_at).format('dddd, DD MMMM YYYY') }</span>

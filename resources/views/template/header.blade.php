@@ -274,7 +274,7 @@
 
                 </div>
                 <div class="modal-body">
-                    <form id="form_filter" method="post" action="">
+                    <form id="form_filter" method="get" action="">
                         <div class="d-flex flex-column">
                             <label for="kategori"><b>Kategori</b></label>
                             <select class="form-control" data-plugin="select2" name="kategori" id="kategori">
@@ -296,14 +296,14 @@
                             <div class="example-wrap">
                                 <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
                                     <span class="input-group-addon bootstrap-touchspin-prefix input-group-prepend">
-                                        <span class="input-group-text" style="color: orange">Rp*</span>
+                                        <span class="input-group-text" style="color: orange">Rp</span>
                                     </span>
                                     <input type="text" class="form-control" name="hargaMin" id="hargaMin" placeholder="Harga Minimum">
                                 </div>
                                 <br>
                                 <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
                                     <span class="input-group-addon bootstrap-touchspin-prefix input-group-prepend">
-                                        <span class="input-group-text" style="color: orange">Rp*</span>
+                                        <span class="input-group-text" style="color: orange">Rp</span>
                                     </span>
                                     <input type="text" class="form-control" name="hargaMax" id="hargaMax" placeholder="Harga Maximum">
                                 </div>
@@ -409,7 +409,7 @@
                             </td>
                         </tr>
                     </table>
-                    <button type="button" class="btn btn-primary" id="btn-buy-item" style="padding-right: 25px" data-id="-1">Beli Sekarang</button>
+                    <button type="button" class="btn btn-primary" id="btn-buy-item" style="padding-right: 25px" data-id="-1" data-dismiss="modal">Beli Sekarang</button>
                 </div>
             </div>
         </div>

@@ -33,7 +33,7 @@
                             <div class="counter counter-md text-left">
                                 <div class="counter-number-group">
                                     <span
-                                        class="counter-number">{{ App\User::where('group_id', 'AGENT')->get()->count() }}</span>
+                                        class="counter-number">{{ App\User::where('group_id', 'CUSTOMER')->get()->count() }}</span>
                                     <span class="counter-number-related text-capitalize">customer</span>
                                 </div>
                                 <div class="counter-label text-capitalize font-size-16">Di seluruh Indonesia</div>

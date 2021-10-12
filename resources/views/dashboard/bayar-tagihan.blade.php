@@ -10,7 +10,7 @@
 @section('table')
 <table class="table table-bordered table-hover table-striped" id="exampleAddRow">
     <thead>
-        <tr>
+        <tr style="text-align: center">
             <th class="w-50">
             </th>
             <th>
@@ -20,14 +20,14 @@
                 Nominal
             </th>
             <th>
-                Metode Bayar
+                Metode Pembayaran
             </th>
             <th>
                 Upload Bukti Bayar
             </th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="table-section" data-plugin="tableSection">    
         <tr>
             <td>
                 <div class="checkbox-custom checkbox-warning">
@@ -35,11 +35,11 @@
                     <label for="inputUnchecked"></label>
                 </div>
             </td>
-            <td>
-                <span class="font-weight-medium">Project #25369</span>
+            <td class="font-weight-medium">
+                <span> KWSUPER03 </span>
             </td>
             <td>
-                <span class="font-weight-medium">10000000</span>
+                <span class="font-weight-medium">Rp 1.000.000</span>
             </td>
             <td>
                 <span class="font-weight-medium">Cash</span>
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"><a href="#">Batal</a></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><a href="#">Batal</a></button>
                 <button type="button" class="btn btn-primary"><a href="#" style="color: beige;">Upload</a></button>
             </div>
         </div>

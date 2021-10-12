@@ -1,9 +1,9 @@
 @extends('template.pages.datatable', [
-'page' => 'Lihat Tagihan',
+'page' => 'Tagihan Masuk',
 'breadcumbs' => [
 ['nama' => 'Dashboard', 'link' => 'javascript:void(0)', 'active' => ''],
 ['nama' => 'Tagihan', 'link' => 'javascript:void(0)', 'active' => ''],
-['nama' => 'Lihat Tagihan', 'link' => '', 'active' => 'active']
+['nama' => 'Tagihan Masuk', 'link' => '', 'active' => 'active']
 ]
 ])
 
