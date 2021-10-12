@@ -170,7 +170,7 @@
                                             ${ order.product.nama }
                                         </td>
                                         <td>${ order.qty }</td>
-                                        <td>${  'Rp. '+(order.qty * order.product.harga).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")  }</td>
+                                        <td>${  'Rp '+(order.qty * order.product.harga).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")  }</td>
                                     </tr>`
                             }) // foreach
 

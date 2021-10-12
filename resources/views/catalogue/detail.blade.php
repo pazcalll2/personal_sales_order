@@ -190,6 +190,7 @@ $bodyType = 'site-menubar-unfold';
             let arr = []
             arr.push(param)
             buy(arr, total)
+            window.location.reload(true)
         })
     })
 

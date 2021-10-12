@@ -189,7 +189,7 @@ $bodyType = 'site-menubar-unfold';
     function filter() {
         $.ajax({
             url: "{{ url('filter') }}",
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
             data: $('#form_filter').serialize(),
             headers: {
@@ -315,6 +315,7 @@ $bodyType = 'site-menubar-unfold';
             param.qty = qty
             arr.push(param)
             buy(arr, total)
+            // window.location.reload(true)
         })
     })
 

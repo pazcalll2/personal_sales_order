@@ -157,6 +157,11 @@ $bodyType = 'site-menubar-unfold';
                 $('#data-harga').html(`Rp ${ total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") }`)
                 $('#btn-buy-item').data('id', $(this).data('id'))
                 $('#btn-buy-item').click(function() {
+                    setTimeout(function() => {
+                        $('#purchaseOrder').modal('hide');
+                    }, 2000);
+                })
+                $('#btn-buy-item').click(function() {
                     var arr = []
                     var index = $(this).data('id')
                     var param = data[index]
@@ -164,6 +169,7 @@ $bodyType = 'site-menubar-unfold';
 
                     arr.push(param)
                     buy(arr, total)
+                    // window.location.reload(true)
                 })
             })
 

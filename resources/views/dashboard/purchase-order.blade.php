@@ -37,6 +37,7 @@
     <script>
         $(document).ready(function() {
             preparingOrderTable()
+            $('.btn-info').removeClass( 'disabled' );
         })
 
         function setConfirmation($this, warning, status) {
@@ -48,7 +49,7 @@
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonClass: "btn-warning",
-                confirmButtonText: 'Ya',
+                confirmButtonText: 'OK',
                 closeOnConfirm: false, //closeOnCancel: false
                 cancelButtonText: 'Batal'
             }, function () {
@@ -88,20 +89,32 @@
         }
 
         function updateStatusOrder(data) {
-            console.log('ajaxx ', data)
             $.ajax({
                 url: `{{ url('/dashboard/order/update') }}`,
                 type: 'POST',
-                // data: JSON.stringify(data),
-                // dataType: "json",
-                // contentType: "application/json; charset=utf-8",
                 data: {
                     // _token: $('meta[name="csrf-token"]').attr('content'),
                     // total: total,
                     data
                 },
+                // success: (response) => swal({
+                //     title: 'Yeaaay!',
+                //     text: "Berhasil mengupdate data.",
+                //     type: "success"
+                // }, function() {
+                //     window.location.reload()
+                // })
                 success: (response) => {
                     console.log('orders updated with pending')
+                    swal({
+                        title: 'Tagihan Selesai Dibuat',
+                        text: "Bisa dilihat di menu Perintah Kirim",
+                        type: "success",
+                        confirmButtonClass: "btn-success",
+                        confirmButtonText: 'OK',
+                        closeOnConfirm: true
+                    })
+                    // window.location.reload()
                     preparingOrderTable()
                 }
             })
@@ -139,6 +152,7 @@
                     url: '{{ url("/data/purchase-order/new") }}',
                     type: 'GET',
                     success: (response) => {
+                        console.log(response.data)
                         $table.DataTable().destroy()
                         $table.empty()
                         $table.append($headTable)
@@ -276,6 +290,7 @@
                             let sameQty = true
                             $(`#btn${po.id}`).on('click', function(){
                                 toSubmit.forEach((order)=>{
+                                    $('.btn-info').addClass( 'disabled' );
                                     console.log($(`#inp${order.id}`).val());
                                     if($(`#inp${order.id}`).val() !== order.qty){
                                         order.qty = $(`#inp${order.id}`).val()
@@ -303,64 +318,37 @@
                                         break
                                     }else sameQty = true
                                 }
-                                if (po.orders.length === toSubmit.length && sameQty === true) { 
-                                    // to submit the order if all checkboxes are checked and the req qty same as the max qty
-                                    $.ajax({
-                                        url: `{{ route('addTagihan') }}`,
-                                        type: 'POST',
-                                        data: {po_id: po.id},
-                                        success: (response) => swal({
-                                            title: 'Sukses!',
-                                            text: "Berhasil membuat tagihan",
-                                            type: "success"
-                                        }, function(){
-                                            console.log('Order command is being processed')
-                                            $('#exampleAddRow').DataTable().clear().destroy();
-                                            preparingOrderTable()
+                                if (toSubmit.length > 0) {
+                                    if (po.orders.length === toSubmit.length && sameQty === true) { 
+                                        // to submit the order if all checkboxes are checked and the req qty same as the max qty
+                                        $.ajax({
+                                            url: `{{ route('addTagihan') }}`,
+                                            type: 'POST',
+                                            data: {po_id: po.id},
+                                            success: (response) => swal({
+                                                title: 'Sukses!',
+                                                text: "Berhasil membuat tagihan",
+                                                type: "success"
+                                            }, function(){
+                                                console.log('Order command is being processed')
+                                                $('#exampleAddRow').DataTable().clear().destroy();
+                                                preparingOrderTable()
+                                            })
                                         })
-                                    })
-                                }else if(po.orders.length !== toSubmit.length || sameQty !== true){ 
-                                    // to submit the order if not all checkboxes are checked and the req qty is not same as the max qty
-                                    // format of the data in updateStatusOrder(data) by default is 
-                                    // data:{
-                                    //      id, 
-                                    //      data:{
-                                    //          qty
-                                    //      }
-                                    // }
-                                    let products_id = []
-                                    updateStatusOrder(toSubmit);
-                                    // toSubmit.forEach((order, _index) => {
-                                    //     products_id.push(order.product.id)
-                                    //     if (toSubmit.length-1 == _index) {
-                                    //         updateStatusOrder({
-                                    //             id: order.id,
-                                    //             po_id: po.id,
-                                    //             products_id: products_id,
-                                    //             finished: 'true',
-                                    //             data: {
-                                    //                 qty: order.qty
-                                    //             }
-                                    //         })
-                                    //     }else{
-                                    //         updateStatusOrder({
-                                    //             id: order.id,
-                                    //             po_id: po.id,
-                                    //             finished: 'false',
-                                    //             products_id: products_id,
-                                    //             data: {
-                                    //                 qty: order.qty
-                                    //             }
-                                    //         })
-                                    //     }
-                                    // })
-                                    // console.log(toSubmit)
-                                    // console.log('qty similarity ', sameQty)
-                                    // console.log('length similarity ', po.orders.length !== toSubmit.length)
-                                    // console.log('po length ', po.orders.length)
-                                    // console.log('tosubmit length ', toSubmit.length)
-
-                                }
+                                    }else if(po.orders.length !== toSubmit.length || sameQty !== true){ 
+                                        // to submit the order if not all checkboxes are checked or the req qty is not same as the max qty
+                                        // format of the data in updateStatusOrder(data) by default is 
+                                        // data:{
+                                        //      id, 
+                                        //      data:{
+                                        //          qty
+                                        //      }
+                                        // }
+                                        let products_id = []
+                                        // console.log(toSubmit)
+                                        updateStatusOrder(toSubmit);
+                                    }
+                                }else  toastr["error"]('Belum ada produk yang dicentang')
                                 // console.log(parseInt(order.qty) !== parseInt($(`#qty${order.id}`).html()))
                                 // console.log('order.qty', order)
                                 // console.log('max qty', parseInt($(`#qty${order.id}`).html()))
